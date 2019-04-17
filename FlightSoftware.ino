@@ -13,7 +13,9 @@ float telem_gpslon;
 float telem_gpssats;
 float telem_gpsalt;
 float telem_gpstime;
-  
+
+#define voltage_pin 
+
 Adafruit_MPL3115A2 baro = Adafruit_MPL3115A2();
 
 Adafruit_LSM9DS1 lsm = Adafruit_LSM9DS1();
@@ -71,9 +73,12 @@ String getSensorData() {
   gyrX = g.gyro.x;
   gyrY = g.gyro.y;
   gyrZ = g.gyro.z;
+  
+  int voltage = analogRead(voltage_pin);
+  
   String answer = "pascals " + (String)pascals + " alt " + (String)altm + " tempC " + (String)tempC + 
     " lat " + (String)telem_gpslat + " lon " + (String)telem_gpslon + " time " + (String)telem_gpstime +
-    " accX " + (String)accX + " magX " + (String)magX + " gyrX " + (String)gyrX;
+    " accX " + (String)accX + " magX " + (String)magX + " gyrX " + (String)gyrX + " voltage " + voltage;
   return answer;
 } 
 
