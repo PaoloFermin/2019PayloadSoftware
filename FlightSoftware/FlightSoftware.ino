@@ -1,5 +1,6 @@
 /*
- * Version 1.2
+ * Version 1.3
+ * Now recieves xbee data and sets the clock
  */
 #include <Adafruit_LSM9DS1.h>
 #include <Adafruit_Sensor.h>
@@ -48,6 +49,7 @@ void setup() {
 
   if(!SD.begin(chipSelect))Serial.println("SD failed");
   myFile = SD.open("data.txt", FILE_WRITE);
+  cameraSet();
 }
 
 void loop() {
@@ -56,6 +58,14 @@ void loop() {
   Serial2.print(sensorData);
   delay(100);
   myFile.println(sensorData);
+  
+  if(Serial2.available()){
+    char readChar = Serial2.read();
+    if(readChar == 'c'){
+      cameraSet();
+    }
+  }
+  
 }
 
 String getSensorData() {
@@ -92,3 +102,10 @@ String getSensorData() {
     " accX " + (String)accX + " magX " + (String)magX + " gyrX " + (String)gyrX;
   return answer;
 } 
+
+void cameraSet() {
+  digitalWrite(camPin,HIGH);
+  delay(600);
+  digitalWrite(camPin,LOW);
+  delay(400);
+}
