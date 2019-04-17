@@ -1,5 +1,5 @@
 /*
- * Version 1.3
+ * Version 1.3.1
  * Now recieves xbee data and sets the clock
  */
 #include <Adafruit_LSM9DS1.h>
@@ -18,6 +18,7 @@ float telem_gpslon;
 float telem_gpssats;
 float telem_gpsalt;
 float telem_gpstime;
+int camPin = 0;///////////<----------Set this
 
 File myFile;
 const int chipSelect = BUILTIN_SDCARD;
@@ -49,6 +50,8 @@ void setup() {
 
   if(!SD.begin(chipSelect))Serial.println("SD failed");
   myFile = SD.open("data.txt", FILE_WRITE);
+
+  pinMode(camPin, OUTPUT);
   cameraSet();
 }
 
